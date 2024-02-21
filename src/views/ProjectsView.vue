@@ -13,15 +13,15 @@
     methods: {
         getProjects() {
             axios.get('http://127.0.0.1:8000/api/projects')
-        .then( response => {
-            // handle success
-            console.log(response);
-            this.projectsData = response.data;
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        });
+            .then( response => {
+                // handle success
+                console.log(response);
+                this.projectsData = response.data;
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            });
         }
     },
     created() {
@@ -37,7 +37,7 @@
                 <h1>All Projects</h1>
             </div>
             <div class="col-4" v-for="projectData in projectsData">
-                <ProjectCard :projectData="projectData"/>
+                <ProjectCard :projectData="projectData" @click="$router.push({ name: 'projects.show', params: { id: projectData.id} })" />
             </div>
         </div>
     </div>
