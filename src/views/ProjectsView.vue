@@ -11,8 +11,12 @@
         }
     },
     methods: {
-        getProjects() {
-            axios.get('http://127.0.0.1:8000/api/projects')
+        getProjects(queryString = '') {
+            axios.get('http://127.0.0.1:8000/api/projects', {
+                params: {
+                    search: queryString,
+                }
+            })
             .then( response => {
                 // handle success
                 console.log(response);
@@ -36,6 +40,13 @@
             <div class="col-12 text-center mb-3">
                 <h1>All Projects</h1>
             </div>
+            <div class="col-5 mb-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="search" v-model="queryString" @keydown.enter="getProjects(queryString)">
+                        <button class="input-group-text" @click="getProjects(queryString)">Search</button>
+                    </div>
+            </div>
+            <div class="offset-7"></div>
             <div class="col-4" v-for="projectData in projectsData">
                 <ProjectCard :projectData="projectData" @click="$router.push({ name: 'projects.show', params: { id: projectData.id} })" />
             </div>
